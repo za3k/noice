@@ -12,6 +12,7 @@ Installation instructions:
     cd noice-tarragon && make && cd ..
     sudo mkdir -p /var/local/media-player
     sudo cp noice-tarragon/noice media-player-tarragon/* /var/local/media-player
+    sudo cp media-player-tarragon/remote /usr/local/bin/remote
 
 - **/etc/fstab**: //192.168.1.17/videos   /media/germinate cifs ro,noauto,user,user=schelling,password=schelling 0 0
 - **~/.bashrc**: alias watch="cd /media/germinate && /var/local/media-player/noice"
