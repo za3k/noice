@@ -1,0 +1,17 @@
+#!/bin/zsh
+cd /data/video/youtube/guest-ytsearch 
+case $# in
+  0)
+    echo "Search for what? "
+    read search
+    if [ "${search}" = "" ]; then exit 0; fi
+    ;;
+  1)
+    search=$1
+    ;;
+  *)
+    exit 1;
+    ;;
+esac
+#youtube-dl "ytsearch1:${search}" --download-archive ARCHIVE
+youtube-dl "ytsearch1:${search}" --no-overwrite --exec '/var/local/media-player/mplay {}'

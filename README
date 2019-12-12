@@ -1,0 +1,22 @@
+Server
+---
+TODO
+
+
+Client
+---
+/media/germinate is mounted via smb client.
+
+Installation instructions: 
+
+    cd noice-tarragon && make && cd ..
+    sudo mkdir -p /var/local/media-player
+    sudo cp noice-tarragon/noice media-player-tarragon/* /var/local/media-player
+
+- **/etc/fstab**: //192.168.1.17/videos   /media/germinate cifs ro,noauto,user,user=schelling,password=schelling 0 0
+- **~/.bashrc**: alias watch="cd /media/germinate && /var/local/media-player/noice"
+
+Troubleshooting
+---
+Q: After suspend + resume, tarragon hangs when starting 'noice' (watch), and any existing session may hang.
+A: Kill the noice client using 'xkill'. Do 'sudo mount -lf /media/germinate' to stop the bleeding. I don't know the actual cause but it's been reported elsewhere as an smb issue. Remount if you want to watch movies.
