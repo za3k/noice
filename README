@@ -1,7 +1,11 @@
 Server
 ---
-TODO
+Installation instructions: 
 
+    cd noice-germinate && make && cd ..
+    sudo mkdir -p /var/local/media-player/bin
+    sudo cp noice-germinate/noice media-player-germinate
+    sudo cp -r -t /var/local/media-player media-player-germinate/*
 
 Client
 ---
@@ -11,7 +15,8 @@ Installation instructions:
 
     cd noice-tarragon && make && cd ..
     sudo mkdir -p /var/local/media-player
-    sudo cp noice-tarragon/noice media-player-tarragon/* /var/local/media-player
+    sudo cp noice-tarragon/noice media-player-tarragon
+    sudo cp media-player-tarragon/* /var/local/media-player
     sudo cp media-player-tarragon/remote /usr/local/bin/remote
 
 - **/etc/fstab**: //192.168.1.17/videos   /media/germinate cifs ro,noauto,user,user=schelling,password=schelling 0 0

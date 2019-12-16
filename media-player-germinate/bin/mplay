@@ -1,0 +1,51 @@
+#!/bin/bash
+export logfile="/data/datalogging/mplay.log"
+log_start() {
+  echo "$(\date +%s)	start-movie-local	$1" >>"$logfile"
+}
+log_end() {
+  echo "$(\date +%s)	end-movie-local	$1" >>"$logfile"
+}
+video_length() {
+  mediainfo --Inform="General;%Duration%" "$1"
+}
+
+set -x
+METHOD=fbdev2
+#[ -e "$DISPLAY" ] || METHOD=x
+xhost >/dev/null 2>/dev/null && METHOD=x
+echo "Using method $METHOD..."
+case $METHOD in
+fbdev2)
+  log_start "$1"
+  tput civis # turn off blinking cursor
+  reset
+  fsize=$(cat /sys/class/graphics/fb0/virtual_size)
+  screenw=$(echo $fsize | cut -d, -f1)
+  screenh=$(echo $fsize | cut -d, -f2)
+  TERM=dumb mplayer -vo fbdev2  -screenw ${screenw} -screenh ${screenh} -xy ${screenw} -zoom -fs -ao alsa:device=hw=0.7 -softvol -softvol-max 500 -framedrop "$1" 2>&1 >/dev/null | grep "smaller than video size" -q && TERM=dumb mplayer -vo fbdev2  -screenw ${screenw} -screenh ${screenh} -vf scale=${screenw}:${screenh} -fs -ao alsa:device=hw=0.7 -softvol -softvol-max 500 -framedrop "$1" >/dev/null
+  tput cnorm # turn back on cursor
+  log_end "$1"
+  #TERM=dumb mplayer -vo fbdev2  -screenw 1920 -screenh 1080 -vf scale=1920:1080 -fs -ao alsa:device=hw=0.7 -softvol -softvol-max 500 -framedrop "$1" >/dev/null
+  ;;
+xinit)
+  log_start "$1"
+  sudo /usr/bin/xinit /usr/bin/sudo -u guest "$0" "$1" -- -ac
+  log_end "$1"
+  ;;
+x)
+  #sleep 5 # If we remove this I get no sound
+  DURATION_MS=$(video_length "$1")
+  echo "Starting $1 [$((DURATION_MS / 1000))s video length]" | /bin/log watch
+  START=$(\date +%s)
+  mpv -fs --audio-device='alsa/plughw:CARD=PCH,DEV=7' --volume-max 500 "$1"
+  END=$(\date +%s)
+  DURATION_WATCHED_S=$(( END - START ))
+  echo "Stopping $1 [${DURATION_WATCHED_S}s actually watched]" | /bin/log watch
+  #exec mplayer -zoom -fs -ao alsa:device=hw=0.7 -softvol -softvol-max 500 "$1"
+  #exec xterm -e mplayer -zoom -fs -softvol -softvol-max 500 "$1"
+  ;;
+*)
+  echo "Unknown method" >/dev/stderr
+  ;;
+esac

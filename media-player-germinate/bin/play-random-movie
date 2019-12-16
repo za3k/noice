@@ -1,0 +1,38 @@
+#!/bin/sh
+SDIR=`shuf -e -n1 anime anime movies movies tv_shows tv_shows youtube`
+DIR=/data/video/$SDIR
+case $SDIR in
+anime)
+  case `shuf -e -n1 tv tv tv tv tv movie` in
+  tv)
+    SERIES=`find "$DIR" -maxdepth 1 -type d -print0 | shuf -n1 -z`
+    EPISODE=`find "$SERIES" -type f -print0 | shuf -n1 -z`
+    THING=$EPISODE
+    ;;
+  movie)
+    ANIME_MOVIE=`find "$DIR" -maxdepth 1 -type f -print0 | shuf -n1 -z`
+    THING=$ANIME_MOVIE
+    ;;
+  esac
+;;
+movies)
+  MOVIE=`find "$DIR" -type f -print0 | shuf -n1 -z`
+  THING=$MOVIE
+  ;;
+tv_shows)
+  SERIES=`find "$DIR" -maxdepth 1 -type d -print0 | shuf -n1 -z`
+  EPISODE=`find "$SERIES" -type f -print0 | shuf -n1 -z`
+  THING=$EPISODE
+  ;;
+youtube)
+  SERIES=`find "$DIR" -maxdepth 1 -type d -print0 | shuf -n1 -z`
+  EPISODE=`find "$SERIES" -type f -print0 | shuf -n1 -z`
+  THING=$EPISODE
+  ;;
+esac
+
+if [ "$1" = "-d" ]; then
+  echo "$THING"
+else
+  /var/local/media-player/bin/mplay "$THING"
+fi

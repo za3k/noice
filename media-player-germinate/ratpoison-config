@@ -1,0 +1,2 @@
+escape F30
+exec /usr/bin/sakura -f "Ubuntu Mono,monospace 40" -x /var/local/media-player/bin/noice ; ratpoison -c quit

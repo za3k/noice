@@ -1,0 +1,11 @@
+#!/bin/sh
+if [ -z "$DISPLAY" ]; then
+  sudo /usr/bin/xinit /usr/bin/sudo -u guest /usr/bin/ratpoison -f /var/local/media-player/ratpoison-config -- -ac
+else
+  /var/local/media-player/bin/noice
+fi
+#!/bin/sh
+#  fsize=$(cat /sys/class/graphics/fb0/virtual_size)
+#  screenw=$(echo $fsize | cut -d, -f1)
+#  screenh=$(echo $fsize | cut -d, -f2)
+#sudo /usr/bin/xinit /usr/bin/sudo -u guest /usr/bin/xterm -maximized -fs  -e /var/local/media-player/bin/noice -- -ac

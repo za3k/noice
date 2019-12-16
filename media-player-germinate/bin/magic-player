@@ -1,0 +1,67 @@
+#!/bin/bash
+#set -x
+NOT_FOUND="/data/video/youtube/guest-ytsearch/Lost intro-nQDUtjwoaTY.mkv"
+
+usage() {
+        echo "Usage: magic-mplayer [INPUT]"
+	echo "Plays a video."
+	echo
+	echo "Examples inputs:"
+	echo "  http://youtube.com/stuff"
+	echo "  /data/video/movies/It's a Wonderful Life.avi"
+	echo "  That funny cat video [yt search]"
+	echo "  search:Wonderful Life [fuzzy file search]"
+	echo ""
+}
+
+case $# in
+    0)
+	usage
+        read INPUT
+        ;;
+    1)
+        INPUT="$1"
+        ;;
+    *)
+	usage
+        exit 1
+        ;;
+esac
+
+case "$INPUT" in
+    http*)
+        URL=$INPUT
+        COMMAND="/var/local/media-player/bin/ytsearch \"${URL}\""
+        echo "OK, will download and play that youtube video."
+        ;;
+    /data/video/*)
+        FILE="$INPUT"
+	FILE="$(realpath "$FILE")"
+	if [[ "${FILE}" = /data/video/* ]]; then
+	    COMMAND="/var/local/media-player/bin/mplay \"${FILE}\""
+	    echo "OK, playing."
+	else
+	    echo "No. Nice try."
+	    exit 1
+	fi
+        ;;
+    search:*|s:*)
+        SEARCH_TERM=$(echo "${1}" | sed -re "s/(search|s)://")
+        FOUND_MOVIE=$(sudo -u guest find /data/video -type f -iname "*${INPUT}*" 2>/dev/null | head -n1)
+        if [ -z "${FOUND_MOVIE}" ]; then
+            COMMAND="/var/local/media-player/bin/mplay \"${NOT_FOUND}\""
+	    usage
+            echo "Searching for movie... not found."
+	    exit 1
+        else
+            COMMAND="/var/local/media-player/bin/mplay \"${FOUND_MOVIE}\""
+            echo "OK, fuzzy match found. Playing."
+        fi
+        ;;
+    *)
+	SEARCH_TERM="$1"
+        COMMAND="/var/local/media-player/bin/ytsearch \"${SEARCH_TERM}\""
+        echo "OK, searching. Will download and play."
+        ;;
+esac
+sudo -u guest DISPLAY=:0 ratpoison -c "exec $COMMAND"
