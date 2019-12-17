@@ -1,6 +1,9 @@
-noice-tarragon changes from original
+v1.0
 - Added 'jail' functionality to noice. Noice now refuses to ever leave its starting directory.
-- List of supported file media types updated: avi|mp4|mkv|mp3|ogg|flac|mov|webm
-- Customization of keyboard bindings (tarragon)
-    >: Plays the selected file on the TV
+- List of supported file media types updated: avi|mp4|mkv|mp3|ogg|flac|mov|webm|mpg|mpeg (germinate)
+- List of supported file media types updated: avi|mp4|mkv|mp3|ogg|flac|mov|webm (tarragon)
+- Customization of keyboard
     s: Searches for a phrase on youtube, downloads the first result, and plays it.
+    m: Plays the selected thing in mplay, even if it doesn't match the expected extension
+    r: Plays a random movie or show (germinate only)
+    >: Plays the selected file on the TV (rosemary only)
