@@ -1,3 +1,8 @@
+Prerequisites
+---
+arch: base-devel ncurses
+debian: build-essential libncurses5-dev
+
 Server
 ---
 Installation instructions: 
@@ -5,7 +10,7 @@ Installation instructions:
     make
     sudo make install
 
-Client
+smb Client
 ---
 /media/germinate is mounted via smb client.
 
@@ -14,8 +19,16 @@ Installation instructions:
     make
     sudo make install
 
-- **/etc/fstab**: //192.168.1.17/videos   /media/germinate cifs ro,noauto,user,user=schelling,password=schelling 0 0
-- **~/.bashrc**: alias watch="cd /media/germinate && /var/local/media-player/noice"
+wat
+
+rclone Client
+---
+/media/germinate is mounted via rclone
+
+Installation instructions:
+
+    make
+    sudo make install
 
 Troubleshooting
 ---

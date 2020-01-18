@@ -6,6 +6,7 @@ PREFIX2=/usr/local/bin
 all: all-${HOSTNAME}
 all-rosemary: media-player-rosemary/noice noice-rosemary/noice
 all-germinate: media-player-germinate/bin/noice noice-germinate/noice
+all-rclone: all-rosemary
 
 install: install-${HOSTNAME}
 install-germinate: media-player-germinate/bin/noice
@@ -16,6 +17,12 @@ install-rosemary: media-player-rosemary/noice
 		mkdir -p $(PREFIX)
 		cp media-player-rosemary/* $(PREFIX)
 		cp media-player-rosemary/remote $(PREFIX2)/remote
+
+install-rclone: media-player-rosemary/noice
+		mkdir -p $(PREFIX)
+		cp media-player-rosemary/* $(PREFIX)
+		cp media-player-rosemary/remote $(PREFIX2)/remote
+		cp -r -t $(PREFIX) media-player-rclone/*
 
 LDLIBS = -lcurses
 noice-germinate/noice.o: noice-germinate/util.h noice-germinate/config.h
