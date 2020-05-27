@@ -1,3 +1,9 @@
+v1.2
+- Adde rclone support to 'rosemary' host, via watch.sh
+
+v1.1
+- Added 'byte3' host which uses rclone to mount http. This allows remote use outside the house for me.
+
 v1.0
 - Added 'jail' functionality to noice. Noice now refuses to ever leave its starting directory.
 - List of supported file media types updated: avi|mp4|mkv|mp3|ogg|flac|mov|webm|mpg|mpeg (germinate)

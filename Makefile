@@ -22,6 +22,7 @@ install-byte3: media-player-rosemary/noice
 		mkdir -p $(PREFIX)
 		cp media-player-byte3/* $(PREFIX)
 		cp -r -t $(PREFIX) media-player-byte3/*
+		chmod +x $(PREFIX)/watch.sh
 
 LDLIBS = -lcurses
 noice-germinate/noice.o: noice-germinate/util.h noice-germinate/config.h
