@@ -20,7 +20,8 @@ Installation instructions:
     sudo make install
 
 - **/etc/fstab**: //192.168.1.17/videos   /media/germinate cifs ro,noauto,user,user=schelling,password=schelling 0 0
-- **~/.bashrc**: alias watch="cd /media/germinate && /var/local/media-player/noice"
+- **Local usage ~/.bashrc**: alias watch-lan="/var/local/media-player/noice /media/germinate"
+- **Remote usage ~/.bashrc**: alias watch-remote="/var/local/media-player/watch.sh"
 
 rclone Client
 ---

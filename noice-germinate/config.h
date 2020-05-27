@@ -10,7 +10,7 @@ int restrictdir = 1; /* Set to 1 to restrict traversing above the starting direc
 char *idlecmd   = "rain"; /* The screensaver program */
 
 struct assoc assocs[] = {
-	{ "\\.(avi|mp4|mkv|mp3|ogg|flac|mov|webm|mpg|mpeg)$", "/var/local/media-player/bin/mplay" },
+	{ "\\.(avi|mp4|mkv|mp3|ogg|flac|mov|webm|mpg|mpeg|m4v)$", "/var/local/media-player/bin/mplay" },
 	{ "\\.(png|jpg|gif)$", "fbi" },
 	/*{ "\\.(html|svg)$", "firefox" },
 	{ "\\.pdf$", "mupdf" },
