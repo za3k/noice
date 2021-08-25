@@ -2,6 +2,7 @@ HOSTNAME=$(shell hostname)
 PREFIX=/var/local/media-player
 # Install location of 'remote' for client--should be on the path
 PREFIX2=/usr/local/bin
+MOUNTPOINT=/media/germinate
 
 all: all-${HOSTNAME}
 all-rosemary: media-player-rosemary/noice noice-rosemary/noice
@@ -20,9 +21,16 @@ install-rosemary: media-player-rosemary/noice
 
 install-byte3: media-player-rosemary/noice
 		mkdir -p $(PREFIX)
-		cp media-player-byte3/* $(PREFIX)
 		cp -r -t $(PREFIX) media-player-byte3/*
 		chmod +x $(PREFIX)/watch.sh
+
+install-juice: media-player-rosemary/noice
+		mkdir -p $(PREFIX)
+		mkdir -p $(MOUNTPOINT)
+		cp media-player-rosemary/noice $(PREFIX)
+		cp -r -t $(PREFIX) media-player-juice/*
+		chmod +x $(PREFIX)/watch-lan
+		ln -sf $(PREFIX)/watch-lan $(PREFIX2)/watch-lan
 
 LDLIBS = -lcurses
 noice-germinate/noice.o: noice-germinate/util.h noice-germinate/config.h
@@ -49,5 +57,7 @@ clean-rosemary:
 
 clean-byte3:
 	rm -f media-player-byte3/noice
+clean-juice:
+	rm -f media-player-juice/noice
 
-clean: clean-rosemary clean-germinate clean-byte3
+clean: clean-rosemary clean-germinate clean-byte3 clean-juice

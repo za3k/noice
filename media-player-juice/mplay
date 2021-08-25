@@ -1,0 +1,17 @@
+#!/bin/sh
+video_length() {
+  mediainfo --Inform="General;%Duration%" "$1"
+}
+log_video_length() {
+  DURATION_MS=$(video_length "$1")
+#  echo "Async stats: $1 [$((DURATION_MS / 1000))s video length]" | /bin/log watch
+}
+
+#log_video_length "$1" &
+DURATION_MS=$(video_length "$1")
+#echo "Starting $1 [$((DURATION_MS / 1000))s video length]" | /bin/log watch
+START=$(\date +%s)
+mpv -fs -volume-max 300 "$1" >/dev/null
+END=$(\date +%s)
+DURATION_WATCHED_S=$(( END - START ))
+#echo "Stopping $1 [${DURATION_WATCHED_S}s actually watched]" | /bin/log watch

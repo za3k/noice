@@ -1,0 +1,3 @@
+#!/bin/bash
+mount /media/germinate
+/var/local/media-player/noice /media/germinate

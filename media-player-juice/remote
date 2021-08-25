@@ -1,0 +1,6 @@
+#!/bin/bash
+ARG="$(echo "$1" | sed -e 's/\/media\/germinate/\/data\/video/')"
+if [ -e "$ARG" ]; then
+  ARG="$(xclip -o)"
+fi
+ssh germinate -- /var/local/media-player/bin/magic-player "'$ARG'"
