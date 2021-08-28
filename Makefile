@@ -16,8 +16,11 @@ install-germinate: media-player-germinate/bin/noice
 
 install-rosemary: media-player-rosemary/noice
 		mkdir -p $(PREFIX)
+		mkdir -p $(MOUNTPOINT)
 		cp media-player-rosemary/* $(PREFIX)
 		cp media-player-rosemary/remote $(PREFIX2)/remote
+		chmod +x $(PREFIX)/watch-lan
+		ln -sf $(PREFIX)/watch-lan $(PREFIX2)/watch-lan
 
 install-byte3: media-player-rosemary/noice
 		mkdir -p $(PREFIX)
